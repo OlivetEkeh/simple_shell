@@ -14,7 +14,7 @@ int print_built_ins(const char *command, char **argu)
 {
 	int count;
 
-	builtin built_cmds[]
+	builtin built_cmds[] =
 	{
 		{"env", handle_environment},
 		{"setenv", handle_set_env},

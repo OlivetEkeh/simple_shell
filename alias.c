@@ -1,5 +1,8 @@
 #include "shell.h"
 
+/* Global pointer to the head of the alias linked list */
+ Alias *alias_list = NULL;
+
 /**
  * define_alias - Defines an alias for a command
  * @name: The name of the alias
