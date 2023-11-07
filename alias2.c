@@ -11,7 +11,7 @@ void init_aliases(void)
 }
 
 /**
- * cleanup_aliases - Frees alias data
+ * cleanup_aliases- Frees alias data
  *
  * Return: Void
  */
