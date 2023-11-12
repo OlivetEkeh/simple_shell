@@ -1,1 +1,2 @@
-This is the readme file for our shell project Eyinole Adenuga and Olivet Ekeh
+0x16. C - Simple Shell
+Shell project for Adenuga Sunday and Ekeh Olivet
