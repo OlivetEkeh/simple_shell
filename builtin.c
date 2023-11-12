@@ -14,8 +14,7 @@ int print_built_ins(const char *command, char **argu)
 {
 	int count;
 
-	builtin built_cmds[] =
-	{
+	builtin built_cmds[] = {
 		{"env", handle_environment},
 		{"setenv", handle_set_env},
 		{"unsetenv", handle_unset_env},
@@ -23,7 +22,7 @@ int print_built_ins(const char *command, char **argu)
 		{NULL, NULL}
 	};
 
-	for (count = 0; count < 0; count++)
+	for (count = 0; built_cmds[count].type != NULL; count++)
 	{
 		if (strcmp(built_cmds[count].type, command) == 0)
 		{
@@ -35,43 +34,38 @@ int print_built_ins(const char *command, char **argu)
 }
 
 /**
- * handle_exit - to handle exit cmd with or without args
- * @put_line: what is passed to the cmdline
- * Return: nothing
+ * handle_exit - Handles the exit command
+ * @put_line: The command passed to the shell
+ *
+ * This function handles the exit command to terminate the shell.
  */
 void handle_exit(char *put_line)
 {
-	int stats;
-	int token_len = 0;
-	char **tokens = c_tokenize(put_line, " ", &token_len);
-	char *endp;
-	long temp;
+	char **tokens;
+	int exit_status;
+	int exit_code;
 
+	tokens = c_tokenize(put_line, " \t\n",  NULL);
 	free(put_line);
 
-	if (tokens == NULL || token_len == 1)
+	exit_status = EXIT_FAILURE;
+
+	if (tokens == NULL || tokens[1] == NULL)
+		exit(exit_status);
+
+	exit_code = atoi(tokens[1]);
+
+	if (exit_code < 0)
 	{
-		_free(tokens);
-		exit(EXIT_SUCCESS);
+		fprintf(stderr, "./hsh: 1: exit: Illegal number: %d\n", exit_code);
+		exit(EXIT_FAILURE);
+	}
+	else if (exit_code > 255)
+	{
+		exit_code %= 256;
 	}
 
-	if (token_len > 1)
-	{
-		temp = strtol(tokens[1], &endp, 10);
-		stats = atoi(tokens[1]);
-
-		if (!temp || stats < 0)
-		{
-			fprintf(stderr, "%s: %d: Illegal number: %s", "./hsh", 1, tokens[1]);
-			_free(tokens);
-			exit(2);
-		}
-		else
-		{
-			_free(tokens);
-			exit(stats);
-		}
-	}
+	exit(exit_code);
 }
 
 /**

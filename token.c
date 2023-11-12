@@ -8,42 +8,50 @@
  *
  * Return: An array of pointers to tokens.
  */
+
 char **c_tokenize(char *input, const char *delimiters, int *token_count)
 {
-	char **tokens = NULL;
-	char *token;
-	char *input_copy;
-	int count = 0;
+	char **tokens = NULL, *token, *input_copy, **temp;
+	int count = 0, i;
 
 	if (input == NULL || delimiters == NULL)
 		return (NULL);
 	input_copy = strdup(input);
-
 	if (input_copy == NULL)
 	{
 		perror("./hsh");
 		exit(EXIT_FAILURE);
 	}
 	token = strtok(input_copy, delimiters);
-
 	while (token != NULL)
 	{
-		tokens = realloc(tokens, (count + 2) * sizeof(char *));
-		if (tokens == NULL)
+		temp = realloc(tokens, (count + 2) * sizeof(char *));
+		if (temp == NULL)
 		{
 			perror("./hsh");
+			for (i = 0; i < count; i++)
+			{
+				free(tokens[i]);
+			}
+			free(tokens);
 			exit(EXIT_FAILURE);
 		}
+		tokens = temp;
 		tokens[count] = strdup(token);
-
 		if (tokens[count] == NULL)
 		{
 			perror("./hsh");
+			for (i = 0; i < count; i++)
+			{
+				free(tokens[i]);
+			}
+			free(tokens);
 			exit(EXIT_FAILURE);
 		}
 		count++;
 		token = strtok(NULL, delimiters);
 	}
+
 	free(input_copy);
 	tokens[count] = NULL;
 	*token_count = count;

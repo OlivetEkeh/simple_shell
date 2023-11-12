@@ -1,7 +1,6 @@
 #include "shell.h"
 
-const char *builtin_cmds[] =
-{
+const char *builtin_cmds[] = {
 	"cd",
 	"alias",
 	"setenv",
