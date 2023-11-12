@@ -41,31 +41,8 @@ int print_built_ins(const char *command, char **argu)
  */
 void handle_exit(char *put_line)
 {
-	char **tokens;
-	int exit_status;
-	int exit_code;
-
-	tokens = c_tokenize(put_line, " \t\n",  NULL);
-	free(put_line);
-
-	exit_status = EXIT_FAILURE;
-
-	if (tokens == NULL || tokens[1] == NULL)
-		exit(exit_status);
-
-	exit_code = atoi(tokens[1]);
-
-	if (exit_code < 0)
-	{
-		fprintf(stderr, "./hsh: 1: exit: Illegal number: %d\n", exit_code);
-		exit(EXIT_FAILURE);
-	}
-	else if (exit_code > 255)
-	{
-		exit_code %= 256;
-	}
-
-	exit(exit_code);
+    free(put_line);
+    exit(EXIT_SUCCESS);
 }
 
 /**

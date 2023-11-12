@@ -31,15 +31,28 @@ void handle_change_dir(char **args)
 	}
 
 	if (chdir(new_d) != 0)
-		perror("./hsh");
-	else
+	{
+		if (errno == EACCES)
+		{
+			fprintf(stderr, "cd: Permission denied: %s\n", new_d);
+		}
+		else
+		{
+			perror("./hsh");
+		}
+	} else
 	{
 		full_new_d = getcwd(NULL, 0);
-		if (setenv("pwd", full_new_d, 1) != 0)
+		if (setenv("PWD", full_new_d, 1) != 0)
+		{
+			perror("./hsh");
+		}
+		if (setenv("OLDPWD", current_d, 1) != 0)
 		{
 			perror("./hsh");
 		}
 	}
+
 	free(current_d);
 	free(full_new_d);
 
