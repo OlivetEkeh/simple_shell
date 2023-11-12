@@ -20,10 +20,13 @@ char *c_getline(void)
 		return (NULL);
 	}
 
-	if (line_length > 0 && line_input[line_length - 1] == '\n')
+	if (line_length > 0)
+{
+if (&& line_input[line_length - 1] == '\n')
 	{
 		line_input[line_length - 1] = '\0';
 	}
+}
 	return (line_input);
 }
 
