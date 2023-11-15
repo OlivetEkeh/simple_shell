@@ -41,8 +41,8 @@ int print_built_ins(const char *command, char **argu)
  */
 void handle_exit(char *put_line)
 {
-    free(put_line);
-    exit(EXIT_SUCCESS);
+	free(put_line);
+	exit(EXIT_SUCCESS);
 }
 
 /**

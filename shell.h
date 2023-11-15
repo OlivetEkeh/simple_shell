@@ -22,11 +22,13 @@
 typedef struct builtin
 {
 	const char *type;
-	void (func)(char *);
-} builtin;
+	void (*func)(char **);
+}builtin;
 
-extern builtin built_cmds[];  /* Array of built-in commands */
-extern char *environ;        / External environment variables */
+/* Array of built-in commands */
+extern builtin built_cmds[];
+/* External environment variables */
+extern char **environ;
 
 
 int main(int ac, char *av[]);
